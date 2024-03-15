@@ -1,0 +1,23 @@
+.datePicker {
+    margin-top: 10px;
+
+
+    input {
+        font-size: 25px;
+        font-family: "Sans-serif";
+        font-weight: bold;
+
+
+        text-align: center;
+        justify-content: center;
+        border: 1px solid;
+        border-radius: 10px;
+        background-color: transparent;
+        flex: auto;
+
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
