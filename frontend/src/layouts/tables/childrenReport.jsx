@@ -14,17 +14,35 @@ import GradientLineChart from 'examples/Charts/LineCharts/GradientLineChart';
 import gradientLineChartData from 'layouts/dashboard/data/gradientLineChartData';
 import Icon from "@mui/material/Icon";
 import typography from "assets/theme/base/typography";
-
-
+import CategoryWise from './Components/categoryWise';
+import PieChart from './Components/pieChart';
 const ChildReport = () => {
     const { size } = typography;
     const userId = useParams().childId;
     const [report, setReport] = useState();
     const [children, setChildren] = useState();
+    const [options, setOptions] = useState({
+        animationEnabled: false,
+        exportEnabaled: false,
+        theme: "light1", // "light1", "dark1", "dark2"
+        title: {
+            text: "Category Wise Usage Report Graph"
+        },
+        data: [{
+            indexLabel: "{label}: {y}%",
+            dataPoints: []
+        }]
+    });
     useEffect(() => {
         const fetch = async () => {
             await getChildrenUsageById(userId).then((res) => {
                 setReport(res);
+                let options_data = [];
+                res.categories.map((category) => {
+                    options_data.push({ y: (category.usage / res.totalUsage) * 100, label: category.name })
+                })
+                setOptions({ ...options, data: [{ dataPoints: options_data }] });
+
             });
             await getChildren(userId).then((result) => {
                 setChildren(result);
@@ -36,7 +54,9 @@ const ChildReport = () => {
         <DashboardLayout>
             <Header profile={children} />
             <br />
-            <SoftTypography component="label" variant="h2" fontWeight="bold" mt={10}>
+
+
+            <SoftTypography component="label" variant="h1" fontWeight="bold" mt={10}>
                 Child Report
             </SoftTypography>
             <SoftBox mt={5} mb={3} >
@@ -66,6 +86,17 @@ const ChildReport = () => {
                     </Grid>
                 </Grid>
             </SoftBox>
+            <SoftBox mt={5} mb={3}>
+                <Card>
+                    <SoftTypography component="label" variant="h2" fontWeight="bold" p={3}>
+                        Category Wise Report
+                    </SoftTypography>
+                    <CategoryWise report={report} />
+                    <PieChart options={options} />
+                </Card>
+            </SoftBox >
+
+            {/* Usage Report Category Wise */}
 
         </DashboardLayout >
     )
