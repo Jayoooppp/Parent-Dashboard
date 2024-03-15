@@ -56,27 +56,29 @@ function Tables() {
         <SoftBox py={3}>
           <SoftBox x mb={3}>
             <Card>
+              <SoftBox p={2}>
 
-              <Grid container spacing={3}>
-                {
-                  Childrens.map((child) => {
-                    return (
-                      <Grid item xs={12} sm={6} md={6} key={child.id}>
-                        <div style={{ margin: "20px", cursor: "pointer" }} onClick={() => {
-                          navigate(`/activity/${child.id}`)
-                        }}>
-                          <MiniStatisticsCard
-                            title={{ text: `${child.name} | ${child.age} | ${child.gender}` }}
-                            count={`Usage : ${minToHourAndMin(child.usage)}`}
-                            icon={{ color: "info", component: `${child.gender === "Male" ? "boy" : "girl"}` }}
+                <Grid container spacing={3}>
+                  {
+                    Childrens && Childrens.map((child) => {
+                      return (
+                        <Grid item xs={12} sm={6} md={6} key={child.id}>
+                          <div style={{ cursor: "pointer" }} onClick={() => {
+                            navigate(`/activity/${child.id}`)
+                          }}>
+                            <MiniStatisticsCard
+                              title={{ text: `${child.name} | ${child.age} | ${child.gender}` }}
+                              count={`Usage : ${minToHourAndMin(child.usage)}`}
+                              icon={{ color: "primary", component: `${child.gender === "Male" ? "boy" : "girl"}` }}
 
-                          />
-                        </div>
-                      </Grid>
-                    )
-                  }
-                  )}
-              </Grid>
+                            />
+                          </div>
+                        </Grid>
+                      )
+                    }
+                    )}
+                </Grid>
+              </SoftBox>
             </Card>
 
           </SoftBox>
