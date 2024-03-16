@@ -16,20 +16,21 @@ import Icon from "@mui/material/Icon";
 import typography from "assets/theme/base/typography";
 import CategoryWise from './Components/categoryWise';
 import PieChart from './Components/pieChart';
+import Activities from './Components/activities';
+
 const ChildReport = () => {
     const { size } = typography;
     const userId = useParams().childId;
     const [report, setReport] = useState();
     const [children, setChildren] = useState();
     const [options, setOptions] = useState({
-        animationEnabled: false,
-        exportEnabaled: false,
         theme: "light1", // "light1", "dark1", "dark2"
         title: {
             text: "Category Wise Usage Report Graph"
         },
         data: [{
-            indexLabel: "{label}: {y}%",
+            type: "pie",
+            indexLabel: "{label}: {y} %",
             dataPoints: []
         }]
     });
@@ -41,7 +42,10 @@ const ChildReport = () => {
                 res.categories.map((category) => {
                     options_data.push({ y: (category.usage / res.totalUsage) * 100, label: category.name })
                 })
-                setOptions({ ...options, data: [{ dataPoints: options_data }] });
+                // setOptions({ ...options, data: [{ dataPoints: options_data }] });
+                options.data[0].dataPoints = options_data;
+                setOptions({ ...options });
+
 
             });
             await getChildren(userId).then((result) => {
@@ -86,6 +90,7 @@ const ChildReport = () => {
                     </Grid>
                 </Grid>
             </SoftBox>
+            {/* Usage Report Category Wise */}
             <SoftBox mt={5} mb={3}>
                 <Card>
                     <SoftTypography component="label" variant="h2" fontWeight="bold" p={3}>
@@ -94,9 +99,19 @@ const ChildReport = () => {
                     <CategoryWise report={report} />
                     <PieChart options={options} />
                 </Card>
-            </SoftBox >
+            </SoftBox>
 
-            {/* Usage Report Category Wise */}
+
+            {/* Activites of the user */}
+            <SoftBox mt={5} mb={3}>
+                <SoftTypography component="label" variant="h2" fontWeight="bold" p={3}>
+                    Child Activities
+                </SoftTypography>
+                <Activities />
+            </SoftBox>
+
+
+
 
         </DashboardLayout >
     )

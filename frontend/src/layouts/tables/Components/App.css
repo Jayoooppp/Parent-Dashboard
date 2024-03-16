@@ -1,0 +1,23 @@
+.outer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 50px;
+    width: auto;
+    color: rgb(191, 210, 210);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.custom-slider {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+}
