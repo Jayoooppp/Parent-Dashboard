@@ -99,12 +99,15 @@ export const getChildrens = async (req, res) => {
 
 export const getChildren = async (req, res) => {
     try {
+        console.log("Request")
         const { childId } = req.params;
         await Children.findById(childId).then((child) => {
+            console.log(child);
             return res.status(203).json(child)
         })
 
     } catch (error) {
+        console.log(error);
         return res.status(403).json(error)
 
     }

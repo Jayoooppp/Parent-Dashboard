@@ -55,6 +55,8 @@ import Children from "layouts/dashboard/children";
 import { Dashboard } from "@mui/icons-material";
 import PageNotFound from "layouts/dashboard/pageNotFound";
 import ChildReport from "layouts/tables/childrenReport";
+import BehavioralAnalysis from "layouts/tables/behavioralAnalysis";
+import Result from "layouts/tables/Components/result";
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
@@ -171,6 +173,9 @@ export default function App() {
         <Route path="/dashboard/children/:childId" element={<Children />} />
         <Route path="activity/:childId" element={<ChildReport />} />
         <Route path="*" element={<PageNotFound />} />
+        {/* add route of behvaioral analysis page */}
+        <Route path="/activity/behavioral-analysis/:childId" element={<BehavioralAnalysis />} />
+        <Route path="/activity/behavioral-analysis/result/:analysisId" element={<Result />} />
       </Routes>
     </ThemeProvider>
   );

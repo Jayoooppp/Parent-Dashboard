@@ -55,9 +55,9 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
               <SoftBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <SoftTypography
                   variant="body2"
-                  color={bgColor === "white" ? "info" : "primary"}
+                  color={(bgColor === "white" || bgColor === "error") ? "dark" : "primary"}
                   textGradient
-                  opacity={bgColor === "white" ? 1 : 0.7}
+                  opacity={bgColor === "white" ? 1 : 2}
                   textTransform="capitalize"
                   fontWeight={title.fontWeight}
                 >
