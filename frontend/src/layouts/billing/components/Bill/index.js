@@ -92,18 +92,5 @@ function Bill({ name, company, email, vat, noGutter }) {
   );
 }
 
-// Setting default values for the props of Bill
-Bill.defaultProps = {
-  noGutter: false,
-};
-
-// Typechecking props for the Bill
-Bill.propTypes = {
-  name: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  vat: PropTypes.string.isRequired,
-  noGutter: PropTypes.bool,
-};
 
 export default Bill;

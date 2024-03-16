@@ -12,7 +12,6 @@ API.interceptors.request.use((req) => {
 
 
 export const getChildrens = async (userId) => {
-    console.log(process.env.REACT_APP_URL);
     return await API.get(`/parent/getChildrens/${userId}`);
 }
 

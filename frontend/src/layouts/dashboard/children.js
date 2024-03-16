@@ -94,7 +94,7 @@ function Children() {
         }
         async function fetchData() {
             await getChildren(childId).then((res) => {
-                console.log(res.data)
+                console.log(res)
                 setFormData({ ...res.data });
                 let temp = [];
                 let j = 0;

@@ -1,7 +1,7 @@
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import React, { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
@@ -17,10 +17,11 @@ import typography from "assets/theme/base/typography";
 import CategoryWise from './Components/categoryWise';
 import PieChart from './Components/pieChart';
 import Activities from './Components/activities';
+import SoftButton from 'components/SoftButton';
 
 const ChildReport = () => {
     const { size } = typography;
-    const userId = useParams().childId;
+    const childId = useParams().childId;
     const [report, setReport] = useState();
     const [children, setChildren] = useState();
     const [options, setOptions] = useState({
@@ -36,7 +37,7 @@ const ChildReport = () => {
     });
     useEffect(() => {
         const fetch = async () => {
-            await getChildrenUsageById(userId).then((res) => {
+            await getChildrenUsageById(childId).then((res) => {
                 setReport(res);
                 let options_data = [];
                 res.categories.map((category) => {
@@ -48,12 +49,14 @@ const ChildReport = () => {
 
 
             });
-            await getChildren(userId).then((result) => {
+            await getChildren(childId).then((result) => {
                 setChildren(result);
             });
         }
         fetch();
     }, []);
+
+    {/* Pass the date in all the components such that when date will change component will also get updated*/ }
     return (
         <DashboardLayout>
             <Header profile={children} />
@@ -96,7 +99,7 @@ const ChildReport = () => {
                     <SoftTypography component="label" variant="h2" fontWeight="bold" p={3}>
                         Category Wise Report
                     </SoftTypography>
-                    <CategoryWise report={report} />
+                    <CategoryWise report={report} mb={2} />
                     <PieChart options={options} />
                 </Card>
             </SoftBox>
@@ -111,9 +114,19 @@ const ChildReport = () => {
             </SoftBox>
 
 
+            {/* Behavioral Analysis */}
+            <div style={{ textAlign: "center", justifyContent: "center", cursor: "pointer" }}>
+                <SoftButton variant="gradient" color="secondary" >
+                    <Link to={`/activity/behavioral-analysis/${childId}`}>
+                        <SoftTypography component="label" variant="h4" fontWeight="bold">
+                            Behavioral Analysis&nbsp;
+                            <Icon>forward</Icon>
+                        </SoftTypography>
+                    </Link>
+                </SoftButton>
+            </div>
 
-
-        </DashboardLayout >
+        </DashboardLayout>
     )
 }
 

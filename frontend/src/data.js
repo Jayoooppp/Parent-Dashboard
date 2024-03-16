@@ -222,3 +222,41 @@ export const Categories = [
     "Hate Symbols",
     "Drugs & Alcohol"
 ];
+
+export const analysisResults = {
+    analysis: [{
+        key: "Positive or Neutral",
+        value: "Minimal"
+    }, {
+        key: "Offensive",
+        value: "Minimal"
+    }, {
+        key: "Violent",
+        value: "Extensive"
+    }, {
+        key: "Entertainment",
+        value: "Moderate"
+    }, {
+        key: "Suggestive or Adult",
+        value: "Minimal"
+    }, {
+        key: "Educational",
+        value: "Moderate"
+    }, {
+        key: "Health & Sports",
+        value: "Moderate"
+    }, {
+        key: "Explicit Nudity",
+        value: "Extensive"
+    }, {
+        key: "Games",
+        value: "Moderate"
+    }, {
+        key: "Hate Symbols",
+        value: "Minimal"
+    }, {
+        key: "Drugs & Alcohol",
+        value: "Extensive"
+    }],
+    date: "2021-10-10T10:00:00",
+}

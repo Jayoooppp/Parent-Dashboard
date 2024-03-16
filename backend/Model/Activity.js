@@ -7,7 +7,6 @@ const ActivitySchema = new mongoose.Schema({
     },
     date: Date,
     request: String,
-    timeStamp: Date,
     category: String,
     access: {
         type: String,

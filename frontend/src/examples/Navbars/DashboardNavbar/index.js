@@ -59,7 +59,7 @@ import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
 function DashboardNavbar({ absolute, light, isMini }) {
-  const [navbarType, setNavbarType] = useState();
+  const [navbarType, setNavbarType] = useState("sticky");
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
@@ -76,11 +76,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   useEffect(() => {
     // Setting the navbar type
-    if (fixedNavbar) {
-      setNavbarType("sticky");
-    } else {
-      setNavbarType("static");
-    }
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {

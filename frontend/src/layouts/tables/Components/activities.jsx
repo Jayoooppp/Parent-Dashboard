@@ -12,6 +12,7 @@ import "./App.css";
 import { Categories } from 'data';
 
 const Activities = () => {
+    // Get the data from passing the conditions and convert it to authorsTableData format
     const { columns, rows } = authorsTableData;
     const [category, setCategories] = useState('all');
     const handleCategoryChange = (e) => {
