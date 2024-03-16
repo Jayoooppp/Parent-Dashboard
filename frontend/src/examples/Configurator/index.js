@@ -85,7 +85,7 @@ function Configurator() {
   });
 
   return (
-    <ConfiguratorRoot variant="permanent" ownerState={{ openConfigurator }}>
+    <ConfiguratorRoot variant="" ownerState={{ openConfigurator }}>
       <SoftBox
         display="flex"
         justifyContent="space-between"

@@ -4,14 +4,11 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
-import Child from "./Child";
+
 // Images
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+import entry from "assets/images/entry.png";
 
-
-export function Author({ image, name, age }) {
+function Author({ image, name, email }) {
   return (
     <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
       <SoftBox mr={2}>
@@ -22,57 +19,98 @@ export function Author({ image, name, age }) {
           {name}
         </SoftTypography>
         <SoftTypography variant="caption" color="secondary">
-          {age}
+          {email}
         </SoftTypography>
       </SoftBox>
     </SoftBox>
   );
 }
 
-export function Function({ job, org }) {
+function Function({ job, org }) {
   return (
     <SoftBox display="flex" flexDirection="column">
       <SoftTypography variant="caption" fontWeight="medium" color="text">
         {job}
       </SoftTypography>
-
+      <SoftTypography variant="caption" color="secondary">
+        {org}
+      </SoftTypography>
     </SoftBox>
   );
 }
 
+const authorsTableData = {
+  columns: [
+    { name: "Request", align: "left" },
+    { name: "Category", align: "left" },
+    { name: "Access", align: "center" },
+    { name: "Timestamp", align: "center" },
+  ],
 
-export const authorsTableData = {
+  rows: [
+    {
+      Request: <Author image={entry} name="Youtube" email="https://youtube.com/?q=physics" />,
+      Category: <Function job="Education" />,
+      Access: (
+        <SoftBadge variant="gradient" badgeContent="Allowed" color="success" size="xs" container />
+      ),
+      Timestamp: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+          23/04/18 11:23:30
+        </SoftTypography>
+      ),
+    },
+    {
+      Request: <Author image={entry} name="Google" email="https://google.com/?q=physics" />,
+      Category: <Function job="Education" />,
+      Access: (
+        <SoftBadge variant="gradient" badgeContent="Not Allowed" color="error" size="xs" container />
+      ),
+      Timestamp: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+          23/04/18 11:23:30
+        </SoftTypography>
+      ),
+    },
+    {
+      Request: <Author image={entry} name="Wikipedia" email="https://wikipedia.com/?q=physics" />,
+      Category: <Function job="Education" />,
+      Access: (
+        <SoftBadge variant="gradient" badgeContent="Allowed" color="success" size="xs" container />
+      ),
+      Timestamp: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+          23/04/18 11:23:30
+        </SoftTypography>
+      ),
+    },
+    {
+      Request: <Author image={entry} name="GitHub" email="https://github.com/?q=physics" />,
+      Category: <Function job="Education" />,
+      Access: (
+        <SoftBadge variant="gradient" badgeContent="Not Allowed" color="error" size="xs" container />
+      ),
+      Timestamp: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+          23/04/18 11:23:30
+        </SoftTypography>
+      ),
+    },
+    {
+      Request: <Author image={entry} name="Stack Overflow" email="https://stackoverflow.com/?q=physics" />,
+      Category: <Function job="Education" />,
+      Access: (
+        <SoftBadge variant="gradient" badgeContent="Allowed" color="success" size="xs" container />
+      ),
+      Timestamp: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+          23/04/18 11:23:30
+        </SoftTypography>
+      ),
+    }
 
-  // columns: [
-  //   { name: "Name", align: "left" },
-  //   { name: "Website", align: "left" },
-  //   { name: "Block", align: "center" },
-  //   { name: "Suggested", align: "center" },
-  //   { name: "action", align: "center" },
-  // ],
-  // rows: [
-  //   childs.map((child, i) => (
-  //     child.visits.map((visit, j) => (
-  //       {
-  //         name: <Author image={team2} name={child.firstName} age={child.age} />,
-  //         website: <Function job={visit.url} />,
-  //         Block: (
-  //           visit.isblocked ? (
-  //             <SoftBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-  //           ) : (
-  //             <SoftBadge variant="gradient" badgeContent="online" color="error" size="xs" container />
-  //           )
-  //         ),
-  //         suggested: (
-  //           <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-  //             {visit.suggestBlocked}
-  //           </SoftTypography>
-  //         ),
-  //       }
-  //     ))
-  //   ))
-  // ]
 
+  ],
 };
 
 export default authorsTableData;
