@@ -10,7 +10,7 @@ const minToHourAndMin = (min, total) => {
 
 const CategoryWise = ({ report }) => {
     return (
-        <SoftBox p={2} >
+        <SoftBox p={2} mb={2}>
             <Grid container spacing={3} justify="center">
                 {
                     report?.categories && report?.categories.map((data, i) => {

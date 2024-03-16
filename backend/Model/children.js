@@ -7,7 +7,10 @@ const childrenSchema = new mongoose.Schema({
     minutes: Number,
     contentFiltering: [String],
     token: String,
-    parent: mongoose.Schema.Types.ObjectId,
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "parent"
+    },
     age: Number,
     gender: String
 
