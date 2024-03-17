@@ -12,7 +12,9 @@ const childrenSchema = new mongoose.Schema({
         ref: "parent"
     },
     age: Number,
-    gender: String
+    gender: String,
+    userName: String,
+    password: String
 
 })
 

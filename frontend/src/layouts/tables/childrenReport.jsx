@@ -41,7 +41,7 @@ const ChildReport = () => {
                 setReport(res);
                 let options_data = [];
                 res.categories.map((category) => {
-                    options_data.push({ y: (category.usage / res.totalUsage) * 100, label: category.name })
+                    options_data.push({ y: Math.ceil((category.usage / res.totalUsage) * 100), label: category.name })
                 })
                 // setOptions({ ...options, data: [{ dataPoints: options_data }] });
                 options.data[0].dataPoints = options_data;
@@ -63,7 +63,7 @@ const ChildReport = () => {
             <br />
 
 
-            <SoftTypography component="label" variant="h1" fontWeight="bold" mt={10}>
+            <SoftTypography component="label" variant="h1" fontWeight="bold" mt={5}>
                 Child Report
             </SoftTypography>
             <SoftBox mt={5} mb={3} >

@@ -59,13 +59,14 @@ function ListItem({ name, company, email, vat, noGutter }) {
                     >
                         <SoftBox mr={1}>
                             <SoftButton variant="text" color="error" onClick={() => {
-                                navigate.push(`/result/1`);
+
                             }}>
                                 <Icon>delete</Icon>&nbsp;delete
                             </SoftButton>
                         </SoftBox>
                         <SoftButton variant="text" color="info" onClick={() => {
-
+                            console.log("View Button Clickd!")
+                            navigate("/activity/behavioral-analysis/1/result/1");
                         }}>
                             <Icon>visibility</Icon>&nbsp;view
                         </SoftButton>

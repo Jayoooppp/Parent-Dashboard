@@ -85,7 +85,9 @@ function Dashboard() {
     hours: 0,
     minutes: 0,
     gender: "",
-    contentFiltering: [false, false, false, false]
+    contentFiltering: [false, false, false, false],
+    userName: "",
+    password: ""
   })
 
   useEffect(() => {
@@ -166,7 +168,7 @@ function Dashboard() {
             ))}
           </Grid>
           <SoftBox py={5} align="center">
-            <SoftButton variant="gradient" color="dark" onClick={() => { setOpen(true) }}>
+            <SoftButton variant="gradient" color="dark" onClick={() => { navigate("/dashboard/addChildren") }}>
               <Icon sx={{ fontWeight: "bold" }}>add</Icon>
               &nbsp;Add New Children
             </SoftButton>

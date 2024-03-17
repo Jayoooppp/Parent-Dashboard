@@ -10,3 +10,6 @@ const analysisSchema = new mongoose.Schema({
         of: String
     }
 });
+
+const Analysis = mongoose.model("analysis", analysisSchema);
+export default Analysis;    
