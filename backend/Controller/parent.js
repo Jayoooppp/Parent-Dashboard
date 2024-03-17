@@ -4,6 +4,10 @@ import verifyEmail from "./VerifyEmail.js";
 import Parent from "../Model/Parent.js";
 import Children from "../Model/children.js";
 import mongoose from "mongoose";
+import Usage from "../Model/Usage.js";
+import Activity from "../Model/Activity.js";
+import Analysis from "../Model/Analysis.js";
+import { getPreviousAnalysis } from "../Utils/Functions.js";
 
 export const signIn = async (req, res) => {
     const { email, password } = req.body;
@@ -156,6 +160,92 @@ export const getVisites = async (req, res) => {
             return res.status(203).json(response)
         })
 
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// get Usage of the children by date
+export const getUsageByDate = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { date } = req.query;
+        const _date = new Date(date);
+        await Usage.findOne({ children: userId, date: _date }).then((usage) => {
+            return res.status(203).json(usage)
+        })
+        return res.status(404).json({ message: "No Data Found" })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+// get Activity of the children by date
+export const getActivityByDate = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { date } = req.query;
+        const _date = new Date(date);
+        const { page } = req.query;
+        const { access } = req.query;
+        const { category } = req.query;
+
+
+        let query = {}
+        if (access !== "all") {
+            query["access"] = access;
+        }
+        if (category !== "all") {
+            query["category"] = category;
+        }
+        query["children"] = userId;
+        query["date"] = _date;
+
+        const activities = await Activity.find(query).sort({ time: -1 }).skip((page - 1) * 10).limit(10);
+        const activityCounts = await Activity.find(query).countDocuments();
+        return res.status(203).json({ activities, totalPages: Math.ceil(activityCounts / 10) });
+
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
+// get last 5 days usage of the children
+export const getLast5DaysUsage = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const today = new Date();
+        const last5Days = new Date(today.setDate(today.getDate() - 5));
+        await Usage.find({ children: userId, date: { $gte: last5Days } }).sort({ date: -1 }).then((usage) => {
+            return res.status(203).json(usage)
+        })
+        return res.status(404).json({ message: "No Data Found" })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getBehavioralAnalysus = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { date } = req.query;
+        const _date = new Date(date);
+
+        const previousAnalysis = await getPreviousAnalysis(userId);
+
+        const currentUsage = await Usage.findOne({ children: userId, date: _date });
+
+        const result = await BehaviorAnalysis(currentUsage, previousAnalysis, res);
+
+
+        // save the result in the database
+
+        return res.status(203).json(result);
 
     } catch (error) {
         console.log(error)

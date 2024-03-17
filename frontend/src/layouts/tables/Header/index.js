@@ -130,9 +130,9 @@ function Header({ profile }) {
                 onChange={handleSetTabValue}
                 sx={{ background: "transparent" }}
               >
-                <Tab label="App" icon={<Cube />} />
-                <Tab label="Message" icon={<Document />} />
-                <Tab label="Settings" icon={<Settings />} />
+                <Tab label="Usage" icon={<Cube />} />
+                <Tab label="Category Wise" icon={<Document />} />
+                <Tab label="Activities" icon={<Settings />} />
               </Tabs>
             </AppBar>
           </Grid>

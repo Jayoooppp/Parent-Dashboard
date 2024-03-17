@@ -5,7 +5,7 @@ import MiniStatisticsCard from 'examples/Cards/StatisticsCards/MiniStatisticsCar
 const minToHourAndMin = (min, total) => {
     let hours = Math.floor(min / 60);
     let minutes = min % 60;
-    return `${hours}h ${minutes}m (${(min / total) * 100} %)`;
+    return `${hours}h ${minutes}m (${Math.ceil((min / total) * 100)} %)`;
 }
 
 const CategoryWise = ({ report }) => {
@@ -20,7 +20,7 @@ const CategoryWise = ({ report }) => {
                                     <MiniStatisticsCard
                                         title={{ text: data.name, fontweight: "bold" }}
                                         count={`Usage : ${minToHourAndMin(data.usage, report?.totalUsage)}`}
-                                        icon={{ color: "dark", component: "paid" }}
+                                        icon={{ color: "dark", component: "language" }}
                                         bgColor="light"
 
                                     />
