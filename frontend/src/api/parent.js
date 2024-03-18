@@ -19,9 +19,12 @@ export const addChildren = async (data) => {
     return await API.post(`/parent/addChildren`, data);
 }
 
-export const getChildren = async (childId) => {
-    // return await API.get(`/parent/getChildren/${childId}`);
-    return Childrens[childId - 1];
+export const getChildren = async (childId, temp = "other") => {
+    if (temp == "dashboard") {
+        return await API.get(`/parent/getChildren/${childId}`);
+    } else {
+        return Childrens[childId - 1];
+    }
 }
 
 export const updateChildren = async (childId, data) => {

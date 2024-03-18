@@ -93,7 +93,7 @@ function Children() {
             navigate("/signIn")
         }
         async function fetchData() {
-            await getChildren(childId).then((res) => {
+            await getChildren(childId, "dashboard").then((res) => {
                 console.log(res)
                 setFormData({ ...res.data });
                 let temp = [];
