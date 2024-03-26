@@ -28,6 +28,7 @@ import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { addChildren } from "api/parent";
+import { filters } from "../../Constants";
 
 
 // Soft UI Dashboard React examples
@@ -69,7 +70,6 @@ const style = {
 };
 
 function Dashboard() {
-  const filters = ["abusive", "offensive", "adult", "misleading"]
   const { size } = typography;
   const { chart, items } = reportsBarChartData;
   const navigate = useNavigate();

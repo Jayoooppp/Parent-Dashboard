@@ -22,10 +22,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getChildrens } from "api/parent";
 import { addChildren } from 'api/parent';
-
+import { filters } from '../../Constants';
 
 const AddChildren = () => {
-    const filters = ["abusive", "offensive", "adult", "misleading"]
     const navigate = useNavigate();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile"))?.user)
     const [childrens, setChildrens] = useState([]);
@@ -88,14 +87,13 @@ const AddChildren = () => {
         e.preventDefault();
         setLoading(true);
         let temp = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < formData.contentFiltering.length; i++) {
             if (formData.contentFiltering[i] == true) {
                 temp.push(filters[i]);
             }
         }
         formData.contentFiltering = temp;
         setFormData({ ...formData });
-        console.log("Sending Request");
         await addChildren(formData).then((res) => {
             setOpen(false);
             let data = JSON.parse(localStorage.getItem("profile"))
@@ -260,40 +258,37 @@ const AddChildren = () => {
                                     style={{ "marginTop": "10px" }}
                                 >
                                     <FormGroup>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData.contentFiltering[0]} name="abusive" />
-                                            }
-                                            label="abusive"
-                                            onChange={e => handleCheckBox(e, 0)}
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData.contentFiltering[1]} name="offensive" />
-                                            }
-                                            label="offensive"
-                                            onChange={e => handleCheckBox(e, 1)}
+                                        {
+                                            filters.map((filter, i) => (
+                                                <FormControlLabel
+                                                    key={i}
+                                                    control={<Checkbox checked={!!formData.contentFiltering[i]} onChange={(e) => { handleCheckBox(e, i) }} />}
+                                                    label={filter}
+                                                />
+                                            ))
 
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData.contentFiltering[2]} name="adult" />
-                                            }
-                                            label="adult"
-                                            onChange={e => handleCheckBox(e, 2)}
-
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData.contentFiltering[3]} name="misleading" />
-                                            }
-                                            label="misleading"
-                                            onChange={e => handleCheckBox(e, 3)}
-
-                                        />
+                                        }
                                     </FormGroup>
 
 
+                                </FormControl>
+                                <SoftTypography component="label" variant="body2" fontWeight="bold" mt={2} ml={5} >
+                                    Filtering Level
+                                </SoftTypography>
+                                <FormControl style={{ "marginTop": "45px" }}>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="filtering Level"
+                                        value={formData.filteringLevel}
+                                        onChange={handleChange}
+
+
+                                    >
+                                        <FormControlLabel value="full" control={<Radio />} label="Full" />
+                                        &nbsp;&nbsp;&nbsp;
+                                        <FormControlLabel value="partial" control={<Radio />} label="Partial" />
+                                    </RadioGroup>
                                 </FormControl>
                             </SoftBox>
 
