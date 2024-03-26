@@ -1,19 +1,44 @@
 import SoftBox from 'components/SoftBox';
-import React from 'react'
+import React, { useEffect } from 'react'
 import SoftPagination from 'components/SoftPagination';
 import Icon from "@mui/material/Icon";
 import Card from "@mui/material/Card";
 import Table from 'examples/Tables/Table';
 import SoftTypography from 'components/SoftTypography';
-import authorsTableData from '../data/authorsTableData';
+import authorsTableData, { Author, Function } from '../data/authorsTableData';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { useParams } from 'react-router-dom';
 import "./App.css";
 import { Categories } from 'data';
+import SoftBadge from 'components/SoftBadge';
+import { getActivitiesByDate } from 'api/parent';
+import entry from "assets/images/entry.png";
 
-const Activities = () => {
+
+const Activities = ({ date }) => {
     // Get the data from passing the conditions and convert it to authorsTableData format
-    const { columns, rows } = authorsTableData;
+    const columns = [
+        { name: "Request", align: "left" },
+        { name: "Category", align: "left" },
+        { name: "Access", align: "center" },
+        { name: "Timestamp", align: "center" },
+    ];
+    const getTimeAndDate = (date) => {
+        // set random time for testing but keep the date same
+        let d = new Date(date);
+        d.setHours(Math.floor(Math.random() * 24));
+        d.setMinutes(Math.floor(Math.random() * 60));
+        d.setSeconds(Math.floor(Math.random() * 60));
+
+        let time = d.toLocaleTimeString();
+        let date1 = d.toLocaleDateString();
+        return `${date1} ${time}`;
+    }
+
+
+    const [rows, setRows] = useState([]);
+    const childId = useParams().childId;
     const [category, setCategories] = useState('all');
     const handleCategoryChange = (e) => {
         setCategories(e.target.value);
@@ -22,10 +47,33 @@ const Activities = () => {
     const handleAccessChange = (e) => {
         setAccess(e.target.value);
     }
-
-    const totalPages = 5;
-    const entriesPerPage = 10;
+    const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await getActivitiesByDate(childId, date, category, access, currentPage);
+            console.log(data);
+            const newRows = data.activities.map((row) => {
+                return {
+                    Request: <Author image={entry} name={row.request} />,
+                    Category: <Function job={row.category} />,
+                    Access: (
+                        <SoftBadge variant="gradient" badgeContent={row.access} color={row.access === "Allowed" ? "success" : row.access === "Partially Allowed" ? "primary" : "error"} size="xs" container />
+                    ),
+                    Timestamp: (
+                        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+                            {getTimeAndDate(row.date)}
+                        </SoftTypography>
+                    ),
+
+                }
+            })
+            setTotalPages(data.totalPages);
+            setRows(newRows);
+        }
+        fetchData();
+    }, [category, access, date, currentPage]);
     return (
         <div>
             <div className="outer">
@@ -33,8 +81,8 @@ const Activities = () => {
                     <SoftTypography variant="h4">Accees:</SoftTypography>&nbsp;
                     <Form.Select value={access} onChange={handleAccessChange}>
                         <option value="all">All</option>
-                        <option value="allowed">Allowed</option>
-                        <option value="not allowed">Not Allowed</option>
+                        <option value="Allowed">Allowed</option>
+                        <option value="Not Allowed">Not Allowed</option>
                     </Form.Select>
                 </div>
                 <div className='inner'>

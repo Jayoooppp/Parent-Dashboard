@@ -39,7 +39,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import { useState } from "react";
 import "./style.css";
-function ProfileInfoCard({ title, info, social, profile }) {
+
+function ProfileInfoCard({ title, info, social, totalUsage, profile, date = new Date(), setDate }) {
   const labels = [];
   const values = [];
   const { socialMediaColors } = colors;
@@ -52,13 +53,11 @@ function ProfileInfoCard({ title, info, social, profile }) {
   }
 
 
-  const [date, setDate] = useState(new Date());
-  const usage = 1234;
   const navigate = useNavigate();
 
 
   return (
-    <Card sx={{ height: "80%" }}>
+    <Card sx={{ height: "100%" }}>
       <SoftBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <SoftTypography variant="h4" fontWeight="hard" textTransform="capitalize">
           {title}
@@ -73,13 +72,15 @@ function ProfileInfoCard({ title, info, social, profile }) {
             <DatePicker
               selected={date}
               onChange={(date) => setDate(date)}
-              wrapperClassName="datePicker" />
+              wrapperClassName="datePicker"
+              maxDate={new Date()}
+            />
           </SoftBox>
         </SoftBox>
       </SoftBox>
       <SoftBox p={2}>
-        <SoftTypography >Internt Usage of <b>{profile?.name}</b> is </SoftTypography>
-        <SoftTypography ><b>{Math.floor(usage / 60)}</b> Hrs <b>{usage % 60}</b> Min</SoftTypography>
+        <SoftTypography >Internt Usage of <b>{profile?.firstName} {profile?.lastName}</b> is </SoftTypography>
+        <SoftTypography ><b>{Math.floor(totalUsage / 60)}</b> Hrs <b>{totalUsage % 60}</b> Min</SoftTypography>
         <SoftTypography >on <b>{convertDate(date)}</b> </SoftTypography>
       </SoftBox>
       <SoftTypography

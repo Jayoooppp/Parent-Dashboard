@@ -8,7 +8,7 @@ import SoftBadge from "components/SoftBadge";
 // Images
 import entry from "assets/images/entry.png";
 
-function Author({ image, name, email }) {
+export function Author({ image, name, email }) {
   return (
     <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
       <SoftBox mr={2}>
@@ -26,7 +26,7 @@ function Author({ image, name, email }) {
   );
 }
 
-function Function({ job, org }) {
+export function Function({ job, org }) {
   return (
     <SoftBox display="flex" flexDirection="column">
       <SoftTypography variant="caption" fontWeight="medium" color="text">

@@ -5,12 +5,12 @@ const ActivitySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "children"
     },
-    date: Date,
+    date: Date, //fetch time from the data only 
     request: String,
     category: String,
     access: {
         type: String,
-        enum: ["Allowed", "Not Allowed"]
+        enum: ["Allowed", "Not Allowed", "Partially Allowed"]
     }
 });
 
