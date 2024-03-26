@@ -11,7 +11,7 @@ function AnalysisList() {
     return (
         <Card id="delete-account">
             <SoftBox pt={3} px={2}>
-                <SoftTypography variant="h4" fontWeight="medium">
+                <SoftTypography variant="h4" fontWeight="medium" ml={3}>
                     Previous Analysis
                 </SoftTypography>
             </SoftBox>

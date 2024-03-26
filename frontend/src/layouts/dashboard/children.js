@@ -52,6 +52,7 @@ import { getChildrens } from "api/parent";
 import { Modal, Box, Typography } from "@mui/material";
 import SoftInput from "components/SoftInput";
 import Card from "@mui/material/Card";
+import { filters } from "../../Constants";
 
 
 const style = {
@@ -68,7 +69,6 @@ const style = {
 };
 
 function Children() {
-    const filters = ["abusive", "offensive", "adult", "misleading"]
     const { size } = typography;
     const { chart, items } = reportsBarChartData;
     const navigate = useNavigate();
@@ -84,7 +84,11 @@ function Children() {
         hours: 0,
         minutes: 0,
         gender: "",
-        contentFiltering: [false, false, false, false]
+        contentFiltering: [false] * filters.length,
+        userName: "",
+        password: "",
+        filteringLevel: "full"
+
     })
 
     useEffect(() => {
@@ -94,14 +98,12 @@ function Children() {
         }
         async function fetchData() {
             await getChildren(childId, "dashboard").then((res) => {
-                console.log(res)
                 setFormData({ ...res.data });
                 let temp = [];
                 let j = 0;
-                for (let i = 0; i < 4; i++) {
-                    if (res.data.contentFiltering[j] == filters[i]) {
+                for (let j = 0; j < filters.length; j++) {
+                    if (res.data.contentFiltering.includes(filters[j])) {
                         temp.push(true);
-                        j++;
                     } else {
                         temp.push(false);
                     }
@@ -114,7 +116,7 @@ function Children() {
         fetchData();
     }, []);
 
-
+    console.log(formData)
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -143,7 +145,7 @@ function Children() {
         e.preventDefault();
         setLoading(true);
         let temp = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < formData.contentFiltering.length; i++) {
             if (formData.contentFiltering[i] == true) {
                 temp.push(filters[i]);
             }
@@ -165,6 +167,25 @@ function Children() {
                 <SoftBox p={2}>
                     <Typography id="modal-modal-description" md={{ mt: 5 }} mt={3}>
                         <SoftBox component="form" role="form" >
+                            <Grid container style={{ "display": "flex" }}>
+                                <SoftBox mb={2} ml={5}>
+                                    <SoftBox mb={1} ml={0.5}>
+                                        <SoftTypography component="label" variant="body2" fontWeight="bold">
+                                            userName
+                                        </SoftTypography>
+                                    </SoftBox>
+                                    <SoftInput type="text" placeholder="First Name" name="userName" value={formData.userName} onChange={handleChange} />
+                                </SoftBox>
+                                <SoftBox mb={2} ml={5}>
+                                    <SoftBox mb={1} ml={0.5}>
+                                        <SoftTypography component="label" variant="body2" fontWeight="bold">
+                                            Password
+                                        </SoftTypography>
+                                    </SoftBox>
+                                    <SoftInput type="password" placeholder="Last Name" name="password" value={formData.password} onChange={handleChange} />
+                                </SoftBox>
+
+                            </Grid>
                             <Grid container style={{ "display": "flex" }}>
                                 <SoftBox mb={2} ml={5}>
                                     <SoftBox mb={1} ml={0.5}>
@@ -289,40 +310,37 @@ function Children() {
                                     style={{ "marginTop": "10px" }}
                                 >
                                     <FormGroup>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData?.contentFiltering[0]} name="abusive" />
-                                            }
-                                            label="abusive"
-                                            onChange={e => handleCheckBox(e, 0)}
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData?.contentFiltering[1]} name="offensive" />
-                                            }
-                                            label="offensive"
-                                            onChange={e => handleCheckBox(e, 1)}
+                                        {
+                                            filters.map((filter, i) => (
+                                                <FormControlLabel
+                                                    key={i}
+                                                    control={<Checkbox checked={!!formData.contentFiltering[i]} onChange={(e) => { handleCheckBox(e, i) }} />}
+                                                    label={filter}
+                                                />
+                                            ))
 
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData?.contentFiltering[2]} name="adult" />
-                                            }
-                                            label="adult"
-                                            onChange={e => handleCheckBox(e, 2)}
-
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox checked={formData?.contentFiltering[3]} name="misleading" />
-                                            }
-                                            label="misleading"
-                                            onChange={e => handleCheckBox(e, 3)}
-
-                                        />
+                                        }
                                     </FormGroup>
 
 
+                                </FormControl>
+                                <SoftTypography component="label" variant="body2" fontWeight="bold" mt={2} ml={5} >
+                                    Filtering Level
+                                </SoftTypography>
+                                <FormControl style={{ "marginTop": "45px" }}>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="filteringLevel"
+                                        value={formData?.filteringLevel}
+                                        onChange={handleChange}
+
+
+                                    >
+                                        <FormControlLabel value="full" control={<Radio />} label="Full" />
+                                        &nbsp;&nbsp;&nbsp;
+                                        <FormControlLabel value="partial" control={<Radio />} label="Partial" />
+                                    </RadioGroup>
                                 </FormControl>
                             </SoftBox>
                             <SoftBox>
