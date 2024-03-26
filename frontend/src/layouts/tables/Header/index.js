@@ -105,7 +105,7 @@ function Header({ profile }) {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <SoftAvatar
-              src={profile?.gender === "Male" ? Boy : Girl}
+              src={profile?.gender === "male" ? Boy : Girl}
               alt="profile-image"
               variant="rounded"
               size="xl"
@@ -115,7 +115,7 @@ function Header({ profile }) {
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
-                {profile?.name}
+                {profile?.firstName} {profile?.lastName}
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
                 {profile?.age} | {profile?.gender}

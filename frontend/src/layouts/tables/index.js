@@ -31,19 +31,30 @@ import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCar
 
 // Data
 import projectsTableData from "layouts/tables/data/projectsTableData";
-import { Childrens } from "data";
+// import { Childrens } from "data";
 import boxShadow from "assets/theme/functions/boxShadow";
+import { getChildrens } from "api/parent";
 
 function Tables() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile"))?.user)
   const { columns: prCols, rows: prRows } = projectsTableData;
+  const [Childrens, setChildrens] = useState([]);
+
   const navigate = useNavigate();
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile"))?.user)
     if (!user) {
       navigate("/signIn")
     }
-  }, [])
+  }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getChildrens(user._id);
+      setChildrens(response.data)
+    }
+    fetchData();
+  }, [Childrens])
+
   const minToHourAndMin = (min) => {
     let hours = Math.floor(min / 60);
     let minutes = min % 60;
@@ -64,12 +75,12 @@ function Tables() {
                       return (
                         <Grid item xs={12} sm={6} md={6} key={child.id}>
                           <div style={{ cursor: "pointer" }} onClick={() => {
-                            navigate(`/activity/${child.id}`)
+                            navigate(`/activity/${child._id}`)
                           }}>
                             <MiniStatisticsCard
-                              title={{ text: `${child.name} | ${child.age} | ${child.gender}` }}
-                              count={`Usage : ${minToHourAndMin(child.usage)}`}
-                              icon={{ color: `${child.gender === "Male" ? "info" : "primary"}`, component: `${child.gender === "Male" ? "boy" : "girl"}` }}
+                              title={{ text: `${child.firstName} ${child.lastName} | ${child.age} | ${child.gender}` }}
+                              count={`Usage : ${minToHourAndMin(child?.usage)}`}
+                              icon={{ color: `${child.gender === "male" ? "info" : "primary"}`, component: `${child.gender === "Male" ? "boy" : "girl"}` }}
 
                             />
                           </div>

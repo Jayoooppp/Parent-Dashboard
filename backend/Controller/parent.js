@@ -62,9 +62,6 @@ export const addChildren = async (req, res) => {
 
     const data = req.body;
 
-    // Only for testing purpose
-    // data.contentFiltering = JSON.parse(data.contentFiltering);
-    // data.blockedWebsites = JSON.parse(data.blockedWebsites);
     try {
 
         let access_token = req.headers['authorization'];
@@ -103,10 +100,8 @@ export const getChildrens = async (req, res) => {
 
 export const getChildren = async (req, res) => {
     try {
-        console.log("Request")
         const { childId } = req.params;
         await Children.findById(childId).then((child) => {
-            console.log(child);
             return res.status(203).json(child)
         })
 
@@ -167,15 +162,30 @@ export const getVisites = async (req, res) => {
 }
 
 // get Usage of the children by date
-export const getUsageByDate = async (req, res) => {
+export const getUsageByChildren = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const { date } = req.query;
+        const { childId } = req.params;
+        const date = new Date(req.params.date).toISOString().slice(0, 10);
         const _date = new Date(date);
-        await Usage.findOne({ children: userId, date: _date }).then((usage) => {
-            return res.status(203).json(usage)
+
+        await Usage.findOne({ children: childId, date: _date }).then((usage) => {
+            console.log(usage);
+            // calculate total usage and percentage for each category usage
+            let totalUsage = 0;
+            let categoryWiseUsage = usage.categoryWiseUsage;
+            categoryWiseUsage.forEach((value) => {
+                totalUsage += value;
+            }
+            )
+
+            // create array of objects for each category with name , usage and percentage
+
+            let categoryWiseUsageArray = [];
+            categoryWiseUsage.forEach((value, key) => {
+                categoryWiseUsageArray.push({ name: key, usage: value })
+            })
+            return res.status(203).json({ usage, totalUsage, categoryWiseUsageArray })
         })
-        return res.status(404).json({ message: "No Data Found" })
     } catch (error) {
         console.log(error)
     }
@@ -185,8 +195,8 @@ export const getUsageByDate = async (req, res) => {
 // get Activity of the children by date
 export const getActivityByDate = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const { date } = req.query;
+        const { childId } = req.params;
+        const date = new Date(req.params.date).toISOString().slice(0, 10);
         const _date = new Date(date);
         const { page } = req.query;
         const { access } = req.query;
@@ -200,7 +210,7 @@ export const getActivityByDate = async (req, res) => {
         if (category !== "all") {
             query["category"] = category;
         }
-        query["children"] = userId;
+        query["children"] = childId;
         query["date"] = _date;
 
         const activities = await Activity.find(query).sort({ time: -1 }).skip((page - 1) * 10).limit(10);
@@ -215,16 +225,28 @@ export const getActivityByDate = async (req, res) => {
 
 
 // get last 5 days usage of the children
-export const getLast5DaysUsage = async (req, res) => {
+export const getPreviousUsage = async (req, res) => {
     try {
-        const { userId } = req.params;
+        console.log("Here is the request");
+        const { childId } = req.params;
+        console.log(childId);
         const today = new Date();
         const last5Days = new Date(today.setDate(today.getDate() - 5));
-        await Usage.find({ children: userId, date: { $gte: last5Days } }).sort({ date: -1 }).then((usage) => {
-            return res.status(203).json(usage)
+        const usages = [];
+        await Usage.find({ children: childId, date: { $gte: last5Days } }).sort({ date: -1 }).then((usage) => {
+            // calculate totalUsage for each result
+            usage.forEach((value) => {
+                let totalUsage = 0;
+                let categoryWiseUsage = value.categoryWiseUsage;
+                categoryWiseUsage.forEach((value) => {
+                    totalUsage += value;
+                })
+                usages.push({ date: value.date, totalUsage: totalUsage });
+            })
+            return res.status(203).json(usages)
         })
-        return res.status(404).json({ message: "No Data Found" })
     } catch (error) {
+        return res.status(404).json(error)
         console.log(error)
     }
 }

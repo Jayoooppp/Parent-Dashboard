@@ -21,12 +21,32 @@ const gradientLineChartData = {
       color: "info",
       data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
     },
-    {
-      label: "Websites",
-      color: "dark",
-      data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-    },
+
   ],
 };
+export const customData = {
+  labels: [
+    "3/27/2024",
+    "3/26/2024",
+    "3/25/2024",
+    "3/24/2024",
+    "3/23/2024",
+    "3/22/2024"
+  ],
+  datasets: [
+    {
+      label: "Usage",
+      color: "info",
+      data: [
+        8.37,
+        10.3,
+        9.35,
+        8.4,
+        7.45,
+        7.43
+      ]
+    }
+  ]
+}
 
 export default gradientLineChartData;

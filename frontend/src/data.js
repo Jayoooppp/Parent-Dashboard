@@ -210,17 +210,17 @@ export const ChildrenInternetUsage = [
 
 
 export const Categories = [
-    "Positive or Neutral",
-    "Offensive",
-    "Violent",
-    "Entertainment",
-    "Suggestive or Adult",
-    "Educational",
-    "Health & Sports",
-    "Explicit Nudity",
-    "Games",
-    "Hate Symbols",
-    "Drugs & Alcohol"
+    "positive",
+    "offensive",
+    "violent",
+    "entertainment",
+    "suggestive",
+    "educational",
+    "health",
+    "nudity",
+    "games",
+    "hate",
+    "drugs"
 ];
 
 export const analysisResults = {

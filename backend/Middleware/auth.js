@@ -8,6 +8,9 @@ dotenv.config();
 
 const auth = async (req, res, next) => {
     try {
+        if (!req.headers.authorization) {
+            return res.status(403).json({ message: "User is not authenticated" })
+        }
         const token = req.headers.authorization.split(" ")[1];
         const isLocalToken = token.length < 500;
         let decodeData;

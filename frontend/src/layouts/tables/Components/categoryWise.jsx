@@ -8,18 +8,18 @@ const minToHourAndMin = (min, total) => {
     return `${hours}h ${minutes}m (${Math.ceil((min / total) * 100)} %)`;
 }
 
-const CategoryWise = ({ report }) => {
+const CategoryWise = ({ categoryWiseUsage, totalUsage }) => {
     return (
         <SoftBox p={2} mb={2}>
             <Grid container spacing={3} justify="center">
                 {
-                    report?.categories && report?.categories.map((data, i) => {
+                    categoryWiseUsage && categoryWiseUsage.map((data, i) => {
                         return (
                             <Grid item xs={6} sm={6} md={4} key={i}>
                                 <div>
                                     <MiniStatisticsCard
                                         title={{ text: data.name, fontweight: "bold" }}
-                                        count={`Usage : ${minToHourAndMin(data.usage, report?.totalUsage)}`}
+                                        count={`Usage : ${minToHourAndMin(data.usage, totalUsage)}`}
                                         icon={{ color: "dark", component: "language" }}
                                         bgColor="light"
 

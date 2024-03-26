@@ -8,11 +8,23 @@ const usageSchema = new mongoose.Schema({
         ref: "children"
     },
     date: Date,
-    totalUsage: Number,
+    // totalUsage: Number,
     categoryWiseUsage: {
         type: Map,
-        of: Number
-    }
+        of: Number,
+        default: {
+            "positive": 0,
+            "offensive": 0,
+            "violent": 0,
+            "entertainment": 0,
+            "suggestive": 0,
+            "educational": 0,
+            "health": 0,
+            "sexual": 0,
+            "games": 0,
+            "drugs": 0,
+        }
+    } //In Minutes
 });
 
 const Usage = mongoose.model("usage", usageSchema);

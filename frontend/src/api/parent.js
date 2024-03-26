@@ -20,11 +20,11 @@ export const addChildren = async (data) => {
 }
 
 export const getChildren = async (childId, temp = "other") => {
-    if (temp == "dashboard") {
-        return await API.get(`/parent/getChildren/${childId}`);
-    } else {
-        return Childrens[childId - 1];
-    }
+    return await API.get(`/parent/getChildren/${childId}`);
+
+}
+export const getUsageByChildren = async (childId, date) => {
+    return await API.get(`/parent/getUsageByChildren/${childId}/${date}`);
 }
 
 export const updateChildren = async (childId, data) => {
@@ -36,7 +36,10 @@ export const getVisits = async (userId) => {
 }
 
 
-export const getChildrenUsageById = async (userId) => {
-    // return await API.get(`/parent/getChildrens/${userId}`);
-    return ChildrenInternetUsage[userId - 1];
+export const getActivitiesByDate = async (childId, date, category, access, page) => {
+    return await API.get(`/parent/getActivitiesByDate/${childId}/${date}?page=${page}&access=${access}&category=${category}`);
+}
+
+export const getLast5DaysUsage = async (childId) => {
+    return await API.get(`/parent/getLast5DaysUsage/${childId}`);
 }
