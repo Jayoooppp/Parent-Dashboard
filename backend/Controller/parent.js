@@ -252,6 +252,8 @@ export const getPreviousUsage = async (req, res) => {
 }
 
 
+
+
 export const getBehavioralAnalysus = async (req, res) => {
     try {
         const { userId } = req.params;
