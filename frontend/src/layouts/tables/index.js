@@ -79,7 +79,7 @@ function Tables() {
                           }}>
                             <MiniStatisticsCard
                               title={{ text: `${child.firstName} ${child.lastName} | ${child.age} | ${child.gender}` }}
-                              count={`Usage : ${minToHourAndMin(child?.usage)}`}
+                              count={`Usage Report`}
                               icon={{ color: `${child.gender === "male" ? "info" : "primary"}`, component: `${child.gender === "Male" ? "boy" : "girl"}` }}
 
                             />

@@ -10,9 +10,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { Button } from 'react-bootstrap';
+import { getChildren } from 'api/parent';
+import { getRules } from 'Constants';
 
 
-const AnalysisRules = () => {
+const AnalysisRules = ({ childId }) => {
     const marks = [
         {
             value: 2,
@@ -32,7 +34,8 @@ const AnalysisRules = () => {
         },
     ];
     const [value, setValue] = React.useState([20, 37]);
-
+    const [children, setChildren] = useState();
+    const [Rules, setRules] = useState([]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -45,6 +48,24 @@ const AnalysisRules = () => {
     const handleSaveRules = () => {
 
     }
+
+
+
+    useEffect(() => {
+        // get children by id
+        const fetch = async () => {
+            await getChildren(childId).then((result) => {
+                setCustomRules(result.data.customRules);
+                if (result.data.customRules) {
+                    setRules(result.data.rules);
+                } else {
+                    setRules(getRules(result.data.age));
+                }
+                setChildren(result.data);
+            });
+        }
+        fetch();
+    }, [])
 
     return (
         <>

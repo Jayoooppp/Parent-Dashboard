@@ -23,7 +23,11 @@ const childrenSchema = new mongoose.Schema({
     },
     rules: {
         type: [[Number]]
-    }// Difault rules should be inserted at the time of creation of the child
+    },// Difault rules should be inserted at the time of creation of the child
+    customRules: {
+        type: Boolean,
+        default: false
+    }
 
 })
 
