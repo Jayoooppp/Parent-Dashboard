@@ -40,180 +40,180 @@ app.use("/parent", parentRoutes);
 // ["Allowed", "Not Allowed", "Partially Allowed"] access types
 
 // change key value nudity in categorywise usage to sexual
-const res = Usage.updateMany({}, { $rename: { "categoryWiseUsage.nudity": "sexual" } });
-console.log(res);
+// const res = Usage.updateMany({}, { $rename: { "categoryWiseUsage.nudity": "sexual" } });
+// console.log(res);
 
 
 // const res = Activity.insertMany([
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.twitch.tv",
 //         "category": "entertainment",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.vice.com",
 //         "category": "positive",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.worldstarhiphop.com",
 //         "category": "offensive",
 //         "access": "Not Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.bestgore.com",
 //         "category": "violent",
 //         "access": "Partially Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.adultswim.com",
 //         "category": "suggestive",
 //         "access": "Allowed"
 //     }, {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.twitch.tv",
 //         "category": "entertainment",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.vice.com",
 //         "category": "positive",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.worldstarhiphop.com",
 //         "category": "offensive",
 //         "access": "Not Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.bestgore.com",
 //         "category": "violent",
 //         "access": "Partially Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.adultswim.com",
 //         "category": "nudity",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.hulu.com",
 //         "category": "entertainment",
 //         "access": "Partially Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.pbs.org",
 //         "category": "positive",
 //         "access": "Not Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.buzzfeed.com",
 //         "category": "offensive",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.rottentomatoes.com",
 //         "category": "violent",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.xvideos.com",
 //         "category": "nudity",
 //         "access": "Not Allowed"
 //     }, {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.instagram.com",
 //         "category": "entertainment",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.nationalgeographic.com",
 //         "category": "educational",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.reddit.com",
 //         "category": "positive",
 //         "access": "Not Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.4chan.org",
 //         "category": "offensive",
 //         "access": "Partially Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.webmd.com",
 //         "category": "health",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.epicgames.com",
 //         "category": "games",
 //         "access": "Partially Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.drugabuse.gov",
 //         "category": "drugs",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.theguardian.com",
 //         "category": "hate",
 //         "access": "Not Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.disney.com",
 //         "category": "entertainment",
 //         "access": "Allowed"
 //     },
 //     {
 //         "children": "6431ee0ebe68b0a77c77492b",
-//         "date": "2024-03-26",
+//         "date": "2024-03-27",
 //         "request": "https://www.wikipedia.org",
 //         "category": "educational",
 //         "access": "Partially Allowed"
@@ -397,7 +397,7 @@ console.log(res);
 //     },
 //     {
 //         children: "6431ee0ebe68b0a77c77492b",
-//         date: "2024-03-26",
+//         date: "2024-03-27",
 //         categoryWiseUsage: {
 //             "positive": 40,
 //             "offensive": 50,

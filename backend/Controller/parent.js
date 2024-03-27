@@ -233,7 +233,7 @@ export const getPreviousUsage = async (req, res) => {
         const today = new Date();
         const last5Days = new Date(today.setDate(today.getDate() - 5));
         const usages = [];
-        await Usage.find({ children: childId, date: { $gte: last5Days } }).sort({ date: -1 }).then((usage) => {
+        await Usage.find({ children: childId, date: { $gte: last5Days } }).sort({ date: 1 }).then((usage) => {
             // calculate totalUsage for each result
             usage.forEach((value) => {
                 let totalUsage = 0;
