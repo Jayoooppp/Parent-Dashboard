@@ -227,9 +227,8 @@ export const getActivityByDate = async (req, res) => {
 // get last 5 days usage of the children
 export const getPreviousUsage = async (req, res) => {
     try {
-        console.log("Here is the request");
+        // console.log("Here is the request");
         const { childId } = req.params;
-        console.log(childId);
         const today = new Date();
         const last5Days = new Date(today.setDate(today.getDate() - 5));
         const usages = [];
@@ -259,14 +258,14 @@ export const getBehavioralAnalysus = async (req, res) => {
         const { userId } = req.params;
         const { date } = req.query;
         const _date = new Date(date);
+        const prev = new Date(today.setDate(today.getDate() - 1));
+
 
         const previousAnalysis = await getPreviousAnalysis(userId);
 
         const currentUsage = await Usage.findOne({ children: userId, date: _date });
 
         const result = await BehaviorAnalysis(currentUsage, previousAnalysis, res);
-
-
         // save the result in the database
 
         return res.status(203).json(result);

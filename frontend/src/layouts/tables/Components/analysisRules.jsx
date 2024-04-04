@@ -61,7 +61,6 @@ const AnalysisRules = ({ childId }) => {
 
     const handleSaveRules = async () => {
         setLoading(true);
-        // Save the rule in the backend 
         await updateChildren(childId, { rules: rules, customRules: customRules }).then((result) => {
             setChildren(result.data);
             setLoading(false);
