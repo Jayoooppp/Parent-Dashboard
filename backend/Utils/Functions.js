@@ -21,33 +21,45 @@ const children_data = {
     "Suggestive or Adult": 90,
     "Educational": 490,
     "Health & Sports": 330,
-    "Explicit Nudity": 80,
+    "Explicit sexual": 80,
     "Games": 190,
-    "Hate Symbols": 50,
     "Drugs & Alcohol": 100,
     "total_time": 2180
 };
 
 const type = {
-    "Good": ["Positive or Neutral", "Educational", "Health & Sports", "Games"],
-    "Entertainment": ["Entertainment", "Social Media", "Games"],
-    "Inappropriate": ["Offensive", "Violent", "Suggestive or Adult", "Explicit Nudity", "Hate Symbols", "Drugs & Alcohol"],
+    "Good": ["positive", "educational", "health"],
+    "Entertainment": ["entertainment", "Games"],
+    "Inappropriate": ["offensive", "violent", "suggestive", "sexual", "drugs"],
 }
 
 
 
+export const filters = [
+    "positive",
+    "offensive",
+    "violent",
+    "entertainment",
+    "suggestive",
+    "educational",
+    "health",
+    "sexual",
+    "games",
+    "drugs",
+]
+
 const previous_analysis = {
-    "Positive or Neutral": "Moderate",
-    "Offensive": "None",
-    "Violent": "Extensive",
-    "Entertainment": "Minimal",
-    "Suggestive or Adult": "Moderate",
-    "Educational": "Minimal",
-    "Health & Sports": "Moderate",
-    "Explicit Nudity": "None",
-    "Games": "Moderate",
-    "Hate Symbols": "None",
-    "Drugs & Alcohol": "Extensive"
+    "positive": "Moderate",
+    "offensive": "None",
+    "violent": "Extensive",
+    "entertainment": "Minimal",
+    "suggestive": "Moderate",
+    "educational": "Minimal",
+    "health": "Moderate",
+    "sexual": "None",
+    "games": "Moderate",
+    "hate": "None",
+    "drugs": "Extensive"
 };
 
 
@@ -238,28 +250,28 @@ const previous_analysis = {
 export const rules = [
     [
         [0, 5, 10],
-        [0, 40, 75],
-        [0, 35, 70]
+        [0, 15, 35],
+        [0, 70, 90]
     ],
     [
         [0, 6, 12],
-        [0, 40, 75],
-        [0, 40, 75]
+        [0, 18, 38],
+        [0, 65, 85]
     ],
     [
         [0, 7, 14],
-        [0, 45, 75],
-        [0, 45, 75]
+        [0, 22, 42],
+        [0, 65, 80]
     ],
     [
         [0, 8, 16],
-        [0, 50, 80],
-        [0, 50, 80]
+        [0, 25, 45],
+        [0, 60, 80]
     ],
     [
         [0, 9, 18],
-        [0, 55, 85],
-        [0, 55, 85]
+        [0, 30, 50],
+        [0, 60, 80]
     ]
 ]
 

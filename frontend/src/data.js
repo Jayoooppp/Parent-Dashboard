@@ -87,7 +87,7 @@ export const ChildrenInternetUsage = [
                 usage: Math.floor((1220 * 0.1)), //miniutes,
             },
             {
-                name: "Explicit Nudity",
+                name: "Explicit sexual",
                 usage: Math.floor((1220 * 0.05)), //miniutes,
             },
             {
@@ -137,7 +137,7 @@ export const ChildrenInternetUsage = [
                 usage: Math.floor((980 * 0.1)), //miniutes,
             },
             {
-                name: "Explicit Nudity",
+                name: "Explicit sexual",
                 usage: Math.floor((980 * 0.05)), //miniutes,
             },
             {
@@ -188,7 +188,7 @@ export const ChildrenInternetUsage = [
                 usage: Math.floor((750 * 0.1)), //miniutes,
             },
             {
-                name: "Explicit Nudity",
+                name: "Explicit sexual",
                 usage: Math.floor((750 * 0.05)), //miniutes,
             },
             {
@@ -217,7 +217,7 @@ export const Categories = [
     "suggestive",
     "educational",
     "health",
-    "nudity",
+    "sexual",
     "games",
     "hate",
     "drugs"
@@ -246,7 +246,7 @@ export const analysisResults = {
         key: "Health & Sports",
         value: "Moderate"
     }, {
-        key: "Explicit Nudity",
+        key: "Explicit sexual",
         value: "Extensive"
     }, {
         key: "Games",
