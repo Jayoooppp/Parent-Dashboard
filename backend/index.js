@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import parentRoutes from "./Routes/parent.js";
 import Usage from "./Model/Usage.js";
 import Activity from "./Model/Activity.js";
+import Analysis from "./Model/Analysis.js";
 dotenv.config()
 
 
@@ -22,6 +23,9 @@ app.get("/", (req, res) => {
 })
 
 app.use("/parent", parentRoutes);
+
+
+
 
 {/**
  "positive",
@@ -440,6 +444,7 @@ const PORT = process.env.PORT || 8080;
 mongoose.connect(process.env.MONGO)
     .then(async () => {
         app.listen(PORT, function () {
+
             console.log("Server started at ", PORT);
         })
     })

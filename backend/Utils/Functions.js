@@ -2,12 +2,19 @@ import Analysis from "../Model/Analysis.js"
 
 // get previsious behavioral analysis of children 
 // While Fetching previous analysis we need make sure that we are fetching yesterdays behavioral analysis
-export const getPreviousAnalysis = async (userId) => {
+export const getPreviousAnalysis = async (childId, date) => {
+    const _date = new Date(date.toISOString().slice(0, 10));
     try {
-        await Analysis.findOne({ children: userId }).sort({ date: -1 }).then((analysis) => {
-            return res.status(203).json(analysis)
+        // await Analysis.findOne({ children: childId }).sort({ time: -1 }).then((analysis) => {
+        //     return analysis;
+        // })
+        await Analysis.find().then((analysis) => {
+            console.log(analysis)
+            return analysis;
+        }).catch((error) => {
+            console.log(error)
+            return ({ message: "No Data Found" });
         })
-        return res.status(404).json({ message: "No Data Found" })
     } catch (error) {
         console.log(error)
     }
@@ -48,193 +55,22 @@ export const filters = [
     "drugs",
 ]
 
-const previous_analysis = {
-    "positive": "Moderate",
-    "offensive": "None",
-    "violent": "Extensive",
-    "entertainment": "Minimal",
-    "suggestive": "Moderate",
-    "educational": "Minimal",
-    "health": "Moderate",
-    "sexual": "None",
-    "games": "Moderate",
-    "hate": "None",
-    "drugs": "Extensive"
-};
+// const previous_analysis = {
+//     "positive": "Moderate",
+//     "offensive": "None",
+//     "violent": "Extensive",
+//     "entertainment": "Minimal",
+//     "suggestive": "Moderate",
+//     "educational": "Minimal",
+//     "health": "Moderate",
+//     "sexual": "None",
+//     "games": "Moderate",
+//     "hate": "None",
+//     "drugs": "Extensive"
+// };
 
 
-// export const BehavioralAnalysis = (children_data, age, previous_analysis) => {
-//     let percentage_time_spent = {};
-//     for (let key in children_data) {
-//         if (key !== "total_time") {
-//             percentage_time_spent[key] = (children_data[key] / children_data["total_time"]) * 100;
-//         }
-//     }
-//     let category_analysis = {};
-//     if (age >= 2 && age <= 5) {
-//         for (let key in percentage_time_spent) {
-//             if (type.Inappropriate.includes(key)) {
-//                 if (percentage_time_spent[key] > 0 && percentage_time_spent[key] <= 5) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 5 && percentage_time_spent[key] <= 10) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 10) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else if (type.Entertainment.includes(key)) {
-//                 if (percentage_time_spent[key] > 20 && percentage_time_spent[key] <= 40) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 40 && percentage_time_spent[key] <= 75) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 75) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else {
-//                 if (percentage_time_spent[key] > 15 && percentage_time_spent[key] <= 35) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 35 && percentage_time_spent[key] <= 70) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 70) {
-//                     category_analysis[key] = "Extensive";
-//                 }
 
-//             }
-//         }
-//     } else if (age > 5 && age <= 8) {
-//         for (let key in percentage_time_spent) {
-//             if (type.Inappropriate.includes(key)) {
-//                 if (percentage_time_spent[key] > 0 && percentage_time_spent[key] <= 6) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 6 && percentage_time_spent[key] <= 12) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 12) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else if (type.Entertainment.includes(key)) {
-//                 if (percentage_time_spent[key] > 20 && percentage_time_spent[key] <= 40) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 40 && percentage_time_spent[key] <= 75) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 75) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else {
-//                 if (percentage_time_spent[key] > 20 && percentage_time_spent[key] <= 40) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 40 && percentage_time_spent[key] <= 75) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 75) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             }
-//         }
-//     } else if (age > 8 && age <= 12) {
-//         for (let key in percentage_time_spent) {
-//             if (type.Inappropriate.includes(key)) {
-//                 if (percentage_time_spent[key] > 0 && percentage_time_spent[key] <= 7) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 7 && percentage_time_spent[key] <= 14) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 14) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else if (type.Entertainment.includes(key)) {
-//                 if (percentage_time_spent[key] > 25 && percentage_time_spent[key] <= 45) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 45 && percentage_time_spent[key] <= 75) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 75) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else {
-//                 if (percentage_time_spent[key] > 25 && percentage_time_spent[key] <= 45) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 45 && percentage_time_spent[key] <= 75) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 75) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             }
-//         }
-//     } else if (age > 12 && age <= 15) {
-//         for (let key in percentage_time_spent) {
-//             if (type.Good.includes(key)) {
-//                 if (percentage_time_spent[key] > 0 && percentage_time_spent[key] <= 8) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 8 && percentage_time_spent[key] <= 16) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 16) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else if (type.Entertainment.includes(key)) {
-//                 if (percentage_time_spent[key] > 30 && percentage_time_spent[key] <= 50) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 50 && percentage_time_spent[key] <= 80) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 80) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else {
-//                 if (percentage_time_spent[key] > 30 && percentage_time_spent[key] <= 50) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 50 && percentage_time_spent[key] <= 80) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 80) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             }
-//         }
-//     } else if (age > 15) {
-//         for (let key in percentage_time_spent) {
-//             if (type.Good.includes(key)) {
-//                 if (percentage_time_spent[key] > 0 && percentage_time_spent[key] <= 9) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 9 && percentage_time_spent[key] <= 18) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 18) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else if (type.Entertainment.includes(key)) {
-//                 if (percentage_time_spent[key] > 35 && percentage_time_spent[key] <= 55) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 55 && percentage_time_spent[key] <= 85) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 85) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             } else {
-//                 if (percentage_time_spent[key] > 35 && percentage_time_spent[key] <= 55) {
-//                     category_analysis[key] = "Minimal";
-//                 } else if (percentage_time_spent[key] > 55 && percentage_time_spent[key] <= 85) {
-//                     category_analysis[key] = "Moderate";
-//                 } else if (percentage_time_spent[key] > 85) {
-//                     category_analysis[key] = "Extensive";
-//                 }
-//             }
-//         }
-//     }
-//     for (let key in category_analysis) {
-//         if (category_analysis[key] === "Minimal") {
-//             if (previous_analysis[key] === "Minimal") {
-//                 category_analysis[key] = "Minimal";
-//             } else if (previous_analysis[key] === "Moderate" || previous_analysis[key] === "Extensive") {
-//                 category_analysis[key] = "Moderate";
-//             }
-//         } else if (category_analysis[key] === "Moderate") {
-//             if (previous_analysis[key] === "Minimal") {
-//                 category_analysis[key] = "Moderate";
-//             } else if (previous_analysis[key] === "Moderate" || previous_analysis[key] === "Extensive") {
-//                 category_analysis[key] = "Extensive";
-//             }
-//         } else if (category_analysis[key] === "Extensive") {
-//             if (previous_analysis[key] === "Minimal" || previous_analysis[key] === "Moderate") {
-//                 category_analysis[key] = "Extensive";
-//             }
-//         }
-//     }
-//     return category_analysis;
-// }
-// we can write above code more efficiently by creating array by ages, then good, entertainment and inappropriate categories we can write rules
 
 // age 2-5 as 0
 // age 5-8 as 1
@@ -275,13 +111,17 @@ export const rules = [
     ]
 ]
 
-export const BehavioralAnalysis = (children_data, age, previous_analysis) => {
+export const BehavioralAnalysis = (currentUsage, previous_analysis, children, totalUsage) => {
     let percentage_time_spent = {};
-    for (let key in children_data) {
-        if (key !== "total_time") {
-            percentage_time_spent[key] = (children_data[key] / children_data["total_time"]) * 100;
-        }
+    for (const key in currentUsage.categoryWiseUsage) {
+        console.log(key);
+        percentage_time_spent[key] = (currentUsage.categoryWiseUsage[key] / totalUsage) * 100;
     }
+
+
+
+
+    let age = children.age;
     let category_analysis = {};
     let index = 0;
     if (age >= 2 && age <= 5) {
@@ -295,53 +135,63 @@ export const BehavioralAnalysis = (children_data, age, previous_analysis) => {
     } else if (age > 15) {
         index = 4;
     }
+
+    let childRules;
+    if (children.customRules) {
+        childRules = children.rules;
+    } else {
+        childRules = rules[index];
+    }
+    console.log(previous_analysis.analysis)
+
     for (let key in percentage_time_spent) {
         if (type.Inappropriate.includes(key)) {
-            if (percentage_time_spent[key] > rules[index][0][0] && percentage_time_spent[key] <= rules[index][0][1]) {
+            if (percentage_time_spent[key] > childRules[0][0] && percentage_time_spent[key] <= childRules[0][1]) {
                 category_analysis[key] = "Minimal";
-            } else if (percentage_time_spent[key] > rules[index][0][1] && percentage_time_spent[key] <= rules[index][0][2]) {
+            } else if (percentage_time_spent[key] > childRules[0][1] && percentage_time_spent[key] <= childRules[0][2]) {
                 category_analysis[key] = "Moderate";
-            } else if (percentage_time_spent[key] > rules[index][0][2]) {
+            } else if (percentage_time_spent[key] > childRules[0][2]) {
                 category_analysis[key] = "Extensive";
             }
         } else if (type.Entertainment.includes(key)) {
-            if (percentage_time_spent[key] > rules[index][1][0] && percentage_time_spent[key] <= rules[index][1][1]) {
+            if (percentage_time_spent[key] > childRules[1][0] && percentage_time_spent[key] <= childRules[1][1]) {
                 category_analysis[key] = "Minimal";
-            } else if (percentage_time_spent[key] > rules[index][1][1] && percentage_time_spent[key] <= rules[index][1][2]) {
+            } else if (percentage_time_spent[key] > childRules[1][1] && percentage_time_spent[key] <= childRules[1][2]) {
                 category_analysis[key] = "Moderate";
-            } else if (percentage_time_spent[key] > rules[index][1][2]) {
+            } else if (percentage_time_spent[key] > childRules[1][2]) {
                 category_analysis[key] = "Extensive";
             }
         } else {
-            if (percentage_time_spent[key] > rules[index][2][0] && percentage_time_spent[key] <= rules[index][2][1]) {
+            if (percentage_time_spent[key] > childRules[2][0] && percentage_time_spent[key] <= childRules[2][1]) {
                 category_analysis[key] = "Minimal";
-            } else if (percentage_time_spent[key] > rules[index][2][1] && percentage_time_spent[key] <= rules[index][2][2]) {
+            } else if (percentage_time_spent[key] > childRules[2][1] && percentage_time_spent[key] <= childRules[2][2]) {
                 category_analysis[key] = "Moderate";
             }
-            else if (percentage_time_spent[key] > rules[index][2][2]) {
+            else if (percentage_time_spent[key] > childRules[2][2]) {
                 category_analysis[key] = "Extensive";
             }
         }
     }
     for (let key in category_analysis) {
         if (category_analysis[key] === "Minimal") {
-            if (previous_analysis[key] === "Minimal") {
+            if (previous_analysis.analysis[key] === "Minimal") {
                 category_analysis[key] = "Minimal";
-            } else if (previous_analysis[key] === "Moderate" || previous_analysis[key] === "Extensive") {
+            } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
                 category_analysis[key] = "Moderate";
             }
         } else if (category_analysis[key] === "Moderate") {
-            if (previous_analysis[key] === "Minimal") {
+            if (previous_analysis.analysis[key] === "Minimal") {
                 category_analysis[key] = "Moderate";
-            } else if (previous_analysis[key] === "Moderate" || previous_analysis[key] === "Extensive") {
+            } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
                 category_analysis[key] = "Extensive";
             }
         } else if (category_analysis[key] === "Extensive") {
-            if (previous_analysis[key] === "Minimal" || previous_analysis[key] === "Moderate") {
+            if (previous_analysis.analysis[key] === "Minimal" || previous_analysis.analysis[key] === "Moderate") {
                 category_analysis[key] = "Extensive";
             }
         }
     }
+    console.log(category_analysis);
     return category_analysis;
 };
 
