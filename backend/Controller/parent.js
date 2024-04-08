@@ -301,8 +301,11 @@ export const peformBehavioralAnalysis = async (req, res) => {
                 const children = await Children.findById(childId);
 
                 const result = BehavioralAnalysis(currentUsage.toJSON(), analysis.toJSON(), children, totalUsage);
+                // create new document for the analysis result 
+                const newAnalysis = new Analysis({ children: childId, date: new Date(), analysis: { ...result } });
+                await newAnalysis.save();
 
-                return res.status(203).json(result);
+                return res.status(203).json(newAnalysis);
             })
         })
 
@@ -310,5 +313,27 @@ export const peformBehavioralAnalysis = async (req, res) => {
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getBehavioralAnalysis = async (req, res) => {
+    try {
+        const { childId } = req.params;
+        await Analysis.find({ children: childId }).sort({ date: -1 }).then((analysis) => {
+            return res.status(203).json(analysis)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getBehavioralAnalysisById = async (req, res) => {
+    try {
+        const { analysisId } = req.params;
+        await Analysis.findById(analysisId).then((analysis) => {
+            return res.status(203).json(analysis)
+        })
+    } catch (error) {
+        console.log(error);
     }
 }

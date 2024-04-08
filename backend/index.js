@@ -7,6 +7,7 @@ import parentRoutes from "./Routes/parent.js";
 import Usage from "./Model/Usage.js";
 import Activity from "./Model/Activity.js";
 import Analysis from "./Model/Analysis.js";
+import childrenRoutes from "./Routes/children.js";
 dotenv.config()
 
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/parent", parentRoutes);
+app.use("/children", childrenRoutes);
 
 
 

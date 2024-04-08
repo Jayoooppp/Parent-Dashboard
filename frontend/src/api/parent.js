@@ -43,3 +43,12 @@ export const getActivitiesByDate = async (childId, date, category, access, page)
 export const getLast5DaysUsage = async (childId) => {
     return await API.get(`/parent/getLast5DaysUsage/${childId}`);
 }
+
+export const getBehavioralAnalysis = async (childId) => {
+    return await API.get(`/parent/getBehavioralAnalysis/${childId}`);
+}
+
+
+export const getBehavioralAnalysisById = async (analysisId) => {
+    return await API.get(`/parent/getBehavioralAnalysisById/${analysisId}`);
+}

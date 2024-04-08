@@ -1,5 +1,5 @@
 import express from "express";
-import { addChildren, getActivityByDate, getChildren, getChildrens, getPreviousUsage, getUsageByChildren, getVisites, peformBehavioralAnalysis, signIn, signUp, updateChildren } from "../Controller/parent.js";
+import { addChildren, getActivityByDate, getBehavioralAnalysis, getBehavioralAnalysisById, getChildren, getChildrens, getPreviousUsage, getUsageByChildren, getVisites, peformBehavioralAnalysis, signIn, signUp, updateChildren } from "../Controller/parent.js";
 import auth from "../Middleware/auth.js";
 const parentRoutes = express.Router();
 
@@ -15,4 +15,6 @@ parentRoutes.get("/getUsageByChildren/:childId/:date", auth, getUsageByChildren)
 parentRoutes.get("/getActivitiesByDate/:childId/:date", auth, getActivityByDate);
 parentRoutes.get("/getLast5DaysUsage/:childId", auth, getPreviousUsage);
 parentRoutes.get("/performBehavioralAnalysis/:childId", auth, peformBehavioralAnalysis);
+parentRoutes.get("/getBehavioralAnalysis/:childId", auth, getBehavioralAnalysis);
+parentRoutes.get("/getBehavioralAnalysisById/:analysisId", auth, getBehavioralAnalysisById);
 export default parentRoutes;

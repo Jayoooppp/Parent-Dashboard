@@ -31,7 +31,7 @@ const ChildReport = () => {
     const [totalUsage, setTotalUsage] = useState();
     const [categoryWiseUsage, setCategoryWiseUsage] = useState([]);
     const [children, setChildren] = useState();
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date("2024-04-05"));//yesterdays date
     const [loading, setLoading] = useState(true);
     const [usageReport, setUsageReport] = useState([]);
 

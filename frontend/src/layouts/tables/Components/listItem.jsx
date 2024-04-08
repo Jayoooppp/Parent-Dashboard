@@ -25,7 +25,16 @@ import SoftTypography from "components/SoftTypography";
 import SoftButton from "components/SoftButton";
 import { useNavigate } from "react-router-dom";
 
-function ListItem({ name, company, email, vat, noGutter }) {
+function ListItem({ name, company, email, vat, noGutter, date, time, childId, analysisId }) {
+    const convertDate = (date) => {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return new Date(date).toLocaleDateString(undefined, options);
+    }
+
+    const convertDateToTime = (date) => {
+        const options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+        return new Date(date).toLocaleTimeString(undefined, options);
+    }
     const navigate = useNavigate();
     return (
         <SoftBox
@@ -66,7 +75,7 @@ function ListItem({ name, company, email, vat, noGutter }) {
                         </SoftBox>
                         <SoftButton variant="text" color="info" onClick={() => {
                             console.log("View Button Clickd!")
-                            navigate("/activity/behavioral-analysis/1/result/1");
+                            navigate(`/activity/behavioral-analysis/${childId}/result/${analysisId}`);
                         }}>
                             <Icon>visibility</Icon>&nbsp;view
                         </SoftButton>
@@ -74,7 +83,7 @@ function ListItem({ name, company, email, vat, noGutter }) {
                 </SoftBox>
                 <SoftBox mb={1} lineHeight={0}>
                     <SoftTypography variant="caption" color="text">
-                        Company Name:&nbsp;&nbsp;&nbsp;
+                        Date:&nbsp;{convertDate(date)}
                         <SoftTypography variant="caption" fontWeight="medium" textTransform="capitalize">
                             {company}
                         </SoftTypography>
@@ -82,18 +91,12 @@ function ListItem({ name, company, email, vat, noGutter }) {
                 </SoftBox>
                 <SoftBox mb={1} lineHeight={0}>
                     <SoftTypography variant="caption" color="text">
-                        Email Address:&nbsp;&nbsp;&nbsp;
+                        Time:&nbsp;{convertDateToTime(time)}
                         <SoftTypography variant="caption" fontWeight="medium">
                             {email}
                         </SoftTypography>
                     </SoftTypography>
                 </SoftBox>
-                <SoftTypography variant="caption" color="text">
-                    VAT Number:&nbsp;&nbsp;&nbsp;
-                    <SoftTypography variant="caption" fontWeight="medium">
-                        {vat}
-                    </SoftTypography>
-                </SoftTypography>
             </SoftBox>
         </SoftBox>
     );
