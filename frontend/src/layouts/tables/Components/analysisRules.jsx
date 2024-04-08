@@ -43,7 +43,6 @@ const AnalysisRules = ({ childId }) => {
     const [loading, setLoading] = useState(true);
 
     const handleChange = (newValue, index) => {
-        console.log(newValue, index);
         rules[index][1] = newValue[0] - 1;
         rules[index][2] = newValue[1];
         setRules([...rules]);
@@ -78,7 +77,6 @@ const AnalysisRules = ({ childId }) => {
         // get children by id
         const fetch = async () => {
             await getChildren(childId).then((result) => {
-                console.log(result);
                 setCustomRules(result.data.customRules);
                 if (result.data.customRules) {
                     setRules(result.data.rules);
@@ -93,7 +91,6 @@ const AnalysisRules = ({ childId }) => {
         }
         fetch();
     }, [])
-    console.log(rules);
 
 
     if (loading) {

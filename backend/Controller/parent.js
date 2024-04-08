@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import Usage from "../Model/Usage.js";
 import Activity from "../Model/Activity.js";
 import Analysis from "../Model/Analysis.js";
-import { getPreviousAnalysis } from "../Utils/Functions.js";
+import { BehavioralAnalysis, getPreviousAnalysis } from "../Utils/Functions.js";
 
 export const signIn = async (req, res) => {
     const { email, password } = req.body;
@@ -192,6 +192,24 @@ export const getUsageByChildren = async (req, res) => {
 }
 
 
+// update the usage by children
+export const updateUsageByChildren = async (req, res) => {
+    try {
+        const { childId } = req.params;
+        const date = new Date(req.params.date).toISOString().slice(0, 10);
+        const _date = new Date(date);
+        const data = req.body;
+        await Usage.findOneAndUpdate({ children: childId, date: _date }, data, { new: true }).then((usage) => {
+            return res.status(203).json(usage)
+        }
+        )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 // get Activity of the children by date
 export const getActivityByDate = async (req, res) => {
     try {
@@ -232,6 +250,9 @@ export const getPreviousUsage = async (req, res) => {
         const today = new Date();
         const last5Days = new Date(today.setDate(today.getDate() - 5));
         const usages = [];
+
+
+
         await Usage.find({ children: childId, date: { $gte: last5Days } }).sort({ date: 1 }).then((usage) => {
             // calculate totalUsage for each result
             usage.forEach((value) => {
@@ -253,24 +274,66 @@ export const getPreviousUsage = async (req, res) => {
 
 
 
-export const getBehavioralAnalysus = async (req, res) => {
+export const peformBehavioralAnalysis = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const { date } = req.query;
-        const _date = new Date(date);
-        const prev = new Date(today.setDate(today.getDate() - 1));
+        const { childId } = req.params;
+        let _date = new Date();
+        console.log(_date);
+        let prev = new Date(_date);
+        prev.setDate(prev.getDate() - 1);
+        prev = prev.toISOString().slice(0, 10);
+        _date = _date.toISOString().slice(0, 10);
 
 
-        const previousAnalysis = await getPreviousAnalysis(userId);
 
-        const currentUsage = await Usage.findOne({ children: userId, date: _date });
+        await Analysis.findOne({ children: childId, $expr: { $eq: [prev, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ time: -1 }).then(async (analysis) => {
+            await Usage.findOne({ children: childId, $expr: { $eq: [prev, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ time: -1 }).then(async (currentUsage) => {
+                // calculate total usage
+                if (!currentUsage) {
+                    return res.status(404).json({ message: "No usage found" });
+                }
+                let totalUsage = 0;
+                let categoryWiseUsage = currentUsage.categoryWiseUsage;
+                categoryWiseUsage.forEach((value) => {
+                    totalUsage += value;
+                }
+                )
+                const children = await Children.findById(childId);
 
-        const result = await BehaviorAnalysis(currentUsage, previousAnalysis, res);
-        // save the result in the database
+                const result = BehavioralAnalysis(currentUsage.toJSON(), analysis.toJSON(), children, totalUsage);
+                // create new document for the analysis result 
+                const newAnalysis = new Analysis({ children: childId, date: new Date(), analysis: { ...result } });
+                await newAnalysis.save();
 
-        return res.status(203).json(result);
+                return res.status(203).json(newAnalysis);
+            })
+        })
+
+
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getBehavioralAnalysis = async (req, res) => {
+    try {
+        const { childId } = req.params;
+        await Analysis.find({ children: childId }).sort({ date: -1 }).then((analysis) => {
+            return res.status(203).json(analysis)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getBehavioralAnalysisById = async (req, res) => {
+    try {
+        const { analysisId } = req.params;
+        await Analysis.findById(analysisId).then((analysis) => {
+            return res.status(203).json(analysis)
+        })
+    } catch (error) {
+        console.log(error);
     }
 }
