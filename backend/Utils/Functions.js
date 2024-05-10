@@ -36,7 +36,7 @@ const children_data = {
 
 const type = {
     "Good": ["positive", "educational", "health"],
-    "Entertainment": ["entertainment", "Games"],
+    "Entertainment": ["entertainment", "games"],
     "Inappropriate": ["offensive", "violent", "suggestive", "sexual", "drugs"],
 }
 
@@ -72,11 +72,11 @@ export const filters = [
 
 
 
-// age 2-5 as 0
-// age 5-8 as 1
-// age 8-12 as 2
-// age 12-15 as 3
-// age 15-100 as 4
+// age 2 - 5 as 0
+// age 5 - 8 as 1
+// age 8 - 12 as 2
+// age 12 - 15 as 3
+// age 15 - 100 as 4
 
 // Inappropriate as 0
 // Entertainment as 1
@@ -142,7 +142,6 @@ export const BehavioralAnalysis = (currentUsage, previous_analysis, children, to
     } else {
         childRules = rules[index];
     }
-    console.log(previous_analysis.analysis)
 
     for (let key in percentage_time_spent) {
         if (type.Inappropriate.includes(key)) {
@@ -172,22 +171,24 @@ export const BehavioralAnalysis = (currentUsage, previous_analysis, children, to
             }
         }
     }
-    for (let key in category_analysis) {
-        if (category_analysis[key] === "Minimal") {
-            if (previous_analysis.analysis[key] === "Minimal") {
-                category_analysis[key] = "Minimal";
-            } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
-                category_analysis[key] = "Moderate";
-            }
-        } else if (category_analysis[key] === "Moderate") {
-            if (previous_analysis.analysis[key] === "Minimal") {
-                category_analysis[key] = "Moderate";
-            } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
-                category_analysis[key] = "Extensive";
-            }
-        } else if (category_analysis[key] === "Extensive") {
-            if (previous_analysis.analysis[key] === "Minimal" || previous_analysis.analysis[key] === "Moderate") {
-                category_analysis[key] = "Extensive";
+    if (previous_analysis) {
+        for (let key in category_analysis) {
+            if (category_analysis[key] === "Minimal") {
+                if (previous_analysis.analysis[key] === "Minimal") {
+                    category_analysis[key] = "Minimal";
+                } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
+                    category_analysis[key] = "Moderate";
+                }
+            } else if (category_analysis[key] === "Moderate") {
+                if (previous_analysis.analysis[key] === "Minimal") {
+                    category_analysis[key] = "Moderate";
+                } else if (previous_analysis.analysis[key] === "Moderate" || previous_analysis.analysis[key] === "Extensive") {
+                    category_analysis[key] = "Extensive";
+                }
+            } else if (category_analysis[key] === "Extensive") {
+                if (previous_analysis.analysis[key] === "Minimal" || previous_analysis.analysis[key] === "Moderate") {
+                    category_analysis[key] = "Extensive";
+                }
             }
         }
     }
