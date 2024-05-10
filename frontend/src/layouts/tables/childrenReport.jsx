@@ -31,7 +31,7 @@ const ChildReport = () => {
     const [totalUsage, setTotalUsage] = useState();
     const [categoryWiseUsage, setCategoryWiseUsage] = useState([]);
     const [children, setChildren] = useState();
-    const [date, setDate] = useState(new Date("2024-04-05"));//yesterdays date
+    const [date, setDate] = useState(new Date());//yesterdays date
     const [loading, setLoading] = useState(true);
     const [usageReport, setUsageReport] = useState([]);
 
@@ -88,6 +88,12 @@ const ChildReport = () => {
     });
 
 
+    const changeDate = (date) => {
+        setLoading(true);
+        setDate(date);
+        setLoading(false);
+    }
+
 
 
     {/* Pass the date in all the components such that when date will change component will also get updated*/ }
@@ -116,7 +122,7 @@ const ChildReport = () => {
                     <SoftBox mt={5} mb={3} >
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={4} xl={4}>
-                                <ProfileInfoCard title="Usage Information" profile={children} date={date} setDate={setDate} totalUsage={totalUsage} />
+                                <ProfileInfoCard title="Usage Information" profile={children} date={date} setDate={changeDate} totalUsage={totalUsage} />
                             </Grid>
                             <Grid item xs={12} md={8} xl={8}>
                                 <GradientLineChart

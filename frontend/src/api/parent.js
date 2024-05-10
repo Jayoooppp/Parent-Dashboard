@@ -52,3 +52,7 @@ export const getBehavioralAnalysis = async (childId) => {
 export const getBehavioralAnalysisById = async (analysisId) => {
     return await API.get(`/parent/getBehavioralAnalysisById/${analysisId}`);
 }
+
+export const performBehavioralAnalysis = async (childId) => {
+    return await API.get(`/parent/performBehavioralAnalysis/${childId}`);
+}

@@ -179,7 +179,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SoftBox color={light ? "white" : "inherit"}>
-              <IconButton
+              {/* <IconButton
                 size="large"
                 color="inherit"
                 md={navbarIconButton}
@@ -189,7 +189,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleOpenMenu}
               >
                 <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
-              </IconButton>
+              </IconButton> */}
               {renderMenu()}
               <IconButton md={navbarIconButton} size="large" onClick={() => setOpenUser(true)}>
                 <Icon

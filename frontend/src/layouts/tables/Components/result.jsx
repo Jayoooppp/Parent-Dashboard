@@ -30,7 +30,6 @@ const Result = () => {
         }
         fetch();
     }, [analysisId])
-    console.log(analysisResult)
 
 
 

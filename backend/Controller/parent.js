@@ -172,7 +172,7 @@ export const getUsageByChildren = async (req, res) => {
             console.log(usage);
             // calculate total usage and percentage for each category usage
             let totalUsage = 0;
-            let categoryWiseUsage = usage.categoryWiseUsage;
+            let categoryWiseUsage = usage?.categoryWiseUsage;
             categoryWiseUsage.forEach((value) => {
                 totalUsage += value;
             }
@@ -278,7 +278,6 @@ export const peformBehavioralAnalysis = async (req, res) => {
     try {
         const { childId } = req.params;
         let _date = new Date();
-        console.log(_date);
         let prev = new Date(_date);
         prev.setDate(prev.getDate() - 1);
         prev = prev.toISOString().slice(0, 10);
@@ -286,8 +285,8 @@ export const peformBehavioralAnalysis = async (req, res) => {
 
 
 
-        await Analysis.findOne({ children: childId, $expr: { $eq: [prev, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ time: -1 }).then(async (analysis) => {
-            await Usage.findOne({ children: childId, $expr: { $eq: [prev, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ time: -1 }).then(async (currentUsage) => {
+        await Analysis.findOne({ children: childId, $expr: { $gt: [_date, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ date: -1 }).then(async (analysis) => {
+            await Usage.findOne({ children: childId, $expr: { $eq: [_date, { $dateToString: { date: "$date", format: "%Y-%m-%d" } }] } }).sort({ time: -1 }).then(async (currentUsage) => {
                 // calculate total usage
                 if (!currentUsage) {
                     return res.status(404).json({ message: "No usage found" });
@@ -300,7 +299,7 @@ export const peformBehavioralAnalysis = async (req, res) => {
                 )
                 const children = await Children.findById(childId);
 
-                const result = BehavioralAnalysis(currentUsage.toJSON(), analysis.toJSON(), children, totalUsage);
+                const result = BehavioralAnalysis(currentUsage.toJSON(), analysis?.toJSON(), children, totalUsage);
                 // create new document for the analysis result 
                 const newAnalysis = new Analysis({ children: childId, date: new Date(), analysis: { ...result } });
                 await newAnalysis.save();
